@@ -1,0 +1,75 @@
+new;
+cls;
+
+speed = hsec;
+
+dataset = "panel";      /*** name of data set                              ***/
+auxset = "auxpanel";    /*** name of auxiliary data set                    ***/
+
+let yvar = N0_L0;           /*** name of dependent variable                    ***/
+
+let xvar = N0_L1 N1_L0 OOHx100 MedianInc Trump_dummy KWHpDollar White Black;         /*** names of explanatory variables                ***/
+let lx = 0 1 0 0 0 0 0 0;           /*** lag lenghts of explanatory variables          ***/
+
+
+model = 2;              /*** 0 = levels model                              ***/
+                        /*** 1 = within group mean scaling                 ***/
+                        /*** 2 = quasi differenced model                   ***/
+
+addit = 1;              /*** 0 = multiplicative moment conditions          ***/
+                        /*** 1 = additive moment conditions                ***/
+                        /*** only active when model=0                      ***/
+
+qdif = 1;               /*** 0 = Wooldridge moment conditions              ***/
+                        /*** 1 = Chamberlain moment conditions             ***/
+                        /*** only active when model=2                      ***/
+
+devvar = 0;             /*** set to 1 for taking deviations from overall   ***/
+                        /*** means of explanatory variables                ***/
+                        /*** use this for Wooldridge quasi-differencing    ***/
+
+lfmy = 0;               /*** 0 = no linear feedback model                  ***/
+lfmlag = 0;             /*** # of lags of dep. var.                        ***/
+
+seqz = 1;               /*** 0 = no sequential instruments                 ***/
+let seqzvar =  N0_L0 N1_L0;      /*** names of sequential instruments               ***/
+let lseqz1 = 2 2;       /*** lag length of instrs begin                    ***/
+let lseqz2 = 4 4;       /*** lag length of instrs end                      ***/
+
+nonseqz = 1;            /*** 0 = no non-sequential instruments             ***/
+let nseqzvar = KWHpDollar OOHx100 MedianInc White Black;       /*** names of non-sequential instruments           ***/
+let lnseqz = 1 1 1 1 1;         /*** lag length of instruments                     ***/
+
+let timevar = timeperiod;     /*** name of time variable                         ***/
+                        /*** set equal to 0 for cross section analysis     ***/
+
+timedum = 0;            /*** 1 = time dummies in model                     ***/
+                        /*** estimated coefficients are d_(t)-d_(t-1)      ***/
+                        /*** in quasi-differenced model                    ***/
+
+timez = 0;              /*** 1 = time dummies included in instrument set   ***/
+                        /*** when timedum=0                                ***/
+
+lagl = 1;               /*** maximum lag length in the model               ***/
+
+llev = 0;               /*** observations with less than lagl+llev+1       ***/
+                        /*** (lagl+llev+2 if model=2)                      ***/
+                        /*** time periods get discarded                    ***/
+
+saveres = 1;            /*** 1 = save one- and two-step parameters and     ***/
+                        /*** variance matrices as b1,v1,b2 and v2.fmt      ***/
+
+nind = 20;             /*** no. of individual units processed in each read ***/
+
+
+sval = 1;               /*** sval=0 sets all starting values to 0          ***/
+startvaly = 0.1;        /*** start values for lagged dep. vars.            ***/
+let startvalx = 0 0 0 0 0 0; /*** start values for expl. vars.                 ***/
+startvalc = 0.5;          /*** start value for constant                      ***/
+                        /*** start values for time dummies are 0           ***/
+
+
+output file = expend.out on;
+
+#include expendnm.prg;
+

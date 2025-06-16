@@ -1,0 +1,5 @@
+Panel_noindex = loadd("C:/Users/corde/Tinbergen/Thesis/expend/Panel_noindex.csv");
+saved(Panel_noindex,"panel.dat")
+
+auxPanel = loadd("C:/Users/corde/Tinbergen/Thesis/expend/auxPanel.csv");
+saved(auxPanel,"auxpanel.dat")
